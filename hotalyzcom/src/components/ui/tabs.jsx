@@ -17,4 +17,11 @@ const TabsTrigger = React.forwardRef(function TabsTrigger({ className, ...props 
 });
 TabsTrigger.displayName = "TabsTrigger";
 
-export { Tabs, TabsList, TabsTrigger }
+const TabsContent = React.forwardRef(function TabsContent({ className, ...props }, ref) {
+  return (
+    <TabsPrimitive.Content ref={ref} className={cn("p-4", className)} {...props} />
+  );
+});
+TabsContent.displayName = "TabsContent";
+
+export { Tabs, TabsList, TabsTrigger, TabsContent }

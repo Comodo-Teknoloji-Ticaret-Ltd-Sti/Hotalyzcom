@@ -51,4 +51,15 @@ const CardDescription = React.forwardRef(function CardDescription({ className, .
 });
 CardDescription.displayName = "CardDescription";
 
-export { Card, CardHeader, CardTitle, CardDescription }
+const CardContent = React.forwardRef(function CardContent({ className, ...props }, ref) {
+  return (
+    <div
+      ref={ref}
+      className={cn("p-6 pt-0", className)}
+      {...props}
+    />
+  );
+});
+CardContent.displayName = "CardContent";
+
+export { Card, CardHeader, CardTitle, CardDescription, CardContent }

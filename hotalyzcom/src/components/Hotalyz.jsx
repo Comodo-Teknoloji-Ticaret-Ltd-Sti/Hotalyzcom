@@ -710,7 +710,7 @@ const DemoModal = ({
 }
 
 const HotelCommentsApp = () => {
-    const [selectedPackage, setSelectedPackage] = useState < any > (null)
+    const [selectedPackage, setSelectedPackage] = useState(null)
     const [showPurchaseForm, setShowPurchaseForm] = useState(false)
     const [showDemo, setShowDemo] = useState(false)
     const [currentTestimonial, setCurrentTestimonial] = useState(0)
