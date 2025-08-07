@@ -483,21 +483,26 @@ const DemoModal = ({
                                     <CardContent>
                                         <div className="h-[300px]">
                                             <ResponsiveContainer width="100%" height="100%">
-                                                <BarChart data={departmentData} layout="vertical" margin={{ left: 20, right: 20 }}>
+                                                <BarChart data={departmentData} margin={{ left: 20, right: 20, bottom: 20 }}>
                                                     <CartesianGrid strokeDasharray="3 3" stroke="#e0e0e0" className="dark:stroke-gray-700" />
-                                                    <XAxis type="number" axisLine={false} tickLine={false} className="dark:text-gray-300" />
-                                                    <YAxis
+                                                    <XAxis
                                                         dataKey="department"
-                                                        type="category"
-                                                        width={100}
+                                                        axisLine={false}
+                                                        tickLine={false}
+                                                        className="dark:text-gray-300"
+                                                        angle={-45}
+                                                        textAnchor="end"
+                                                        height={80}
+                                                    />
+                                                    <YAxis
                                                         axisLine={false}
                                                         tickLine={false}
                                                         className="dark:text-gray-300"
                                                     />
                                                     <Tooltip content={<CustomTooltip />} />
                                                     <Legend />
-                                                    <Bar dataKey="positive" fill="#22c55e" barSize={20} radius={[0, 10, 10, 0]} />
-                                                    <Bar dataKey="negative" fill="#ef4444" barSize={20} radius={[0, 10, 10, 0]} />
+                                                    <Bar dataKey="positive" fill="#22c55e" barSize={30} radius={[4, 4, 0, 0]} />
+                                                    <Bar dataKey="negative" fill="#ef4444" barSize={30} radius={[4, 4, 0, 0]} />
                                                 </BarChart>
                                             </ResponsiveContainer>
                                         </div>
@@ -814,12 +819,69 @@ const HotelCommentsApp = () => {
         { name: "Sheraton", logo: getAssetPath("./public/placeholder.svg?height=40&width=120&text=SHERATON") },
         { name: "Hyatt", logo: getAssetPath("./public/placeholder.svg?height=40&width=120&text=HYATT") },
     ]
-    // demoData artık dışarıdan fetch edilecek
+    // demoData artık dışarıdan fetch edilecek, eğer başarısız olursa varsayılan yorumlar kullanılacak
     useEffect(() => {
+        const defaultDemoData = [
+            {
+                User: "Ahmet Kaya",
+                Platform: "Google",
+                CommentDate: "2024-01-15",
+                ReviewText: "Personel çok ilgili ve yardımseverdi. Özellikle resepsiyon görevlileri her konuda destek oldular. Oda temizliği mükemmeldi, her gün düzenli olarak temizlendi.",
+                Sentiment: "Positive",
+                UserScore: "4.8",
+                ReasonDepartment: "Personel, Temizlik"
+            },
+            {
+                User: "Zeynep Demir",
+                Platform: "Booking.com",
+                CommentDate: "2024-01-12",
+                ReviewText: "Kahvaltı çeşitliliği çok iyiydi ancak yemek servis hızı biraz yavaştı. Odanın manzarası harikaydı ama klima sistemi düzgün çalışmıyordu.",
+                Sentiment: "Negative",
+                UserScore: "3.2",
+                ReasonDepartment: "Yemek, Oda"
+            },
+            {
+                User: "Mehmet Özkan",
+                Platform: "TripAdvisor",
+                CommentDate: "2024-01-10",
+                ReviewText: "Genel olarak çok memnun kaldık. Spa hizmetleri harika, masaj çok rahatlatıcıydı. Havuz alanı temiz ve ferahtı. Kesinlikle tekrar geliriz.",
+                Sentiment: "Positive",
+                UserScore: "4.9",
+                ReasonDepartment: "Hizmet, Temizlik, Genel"
+            },
+            {
+                User: "Fatma Yılmaz",
+                Platform: "Google",
+                CommentDate: "2024-01-08",
+                ReviewText: "Çocuk dostu bir otel. Animasyon ekibi çok başarılıydı. Ancak restoran alanı çok gürültülü olabiliyor. Yemekler lezzetliydi ama çeşitlilik az.",
+                Sentiment: "Positive",
+                UserScore: "4.1",
+                ReasonDepartment: "Personel, Yemek"
+            },
+            {
+                User: "Can Arslan",
+                Platform: "Booking.com",
+                CommentDate: "2024-01-05",
+                ReviewText: "Lokasyon mükemmel, denize çok yakın. Ancak oda ses yalıtımı yetersiz, gece uyumakta zorlandık. Temizlik personeli çok dikkatli çalışıyor.",
+                Sentiment: "Negative",
+                UserScore: "3.7",
+                ReasonDepartment: "Oda, Temizlik"
+            },
+            {
+                User: "Elif Şahin",
+                Platform: "Google",
+                CommentDate: "2024-01-03",
+                ReviewText: "Balayımızı burada geçirdik ve çok romantik bir ortamdı. Özel servis alabildik, personel ihtiyaçlarımızı önceden tahmin ediyordu. Mükemmel bir deneyim!",
+                Sentiment: "Positive",
+                UserScore: "5.0",
+                ReasonDepartment: "Personel, Hizmet, Genel"
+            }
+        ];
+
         fetch(getAssetPath("./public/demo-data.json"))
             .then((res) => res.json())
-            .then((data) => setDemoData(data))
-            .catch(() => setDemoData([]))
+            .then((data) => setDemoData(data && data.length > 0 ? data : defaultDemoData))
+            .catch(() => setDemoData(defaultDemoData))
     }, [])
     // Analysis data for charts
     const sentimentData = [
